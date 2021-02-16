@@ -60,3 +60,32 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+<hr />
+
+### Comandos
+- __Criação do projeto__
+    - _composer create-project laravel/laravel projectname_
+- __Testar conexão com banco de dados__
+    - _php artisan migrate:install_
+- __Criando uma migração (stores)__
+    - _php artisan make:migration create_stores_table_
+- __Executando migration__
+    - _php artisan migrate_
+    - __Desfazer migração__
+        - _php artisan migrate:rollback_
+    - __Refaz todas as migrações apagando tabelas__
+        - _php artisan migrate:fresh_
+    - __Refaz todas as migrações tabelas__
+        - _php artisan migrate:refresh_
+- __Criando uma migração (products)__
+    - _php artisan make:migration create_products_table_
+- __Seeders__
+    - __Criar um seeder__
+        - _php artisan make:seeder UserSeeder_
+    - __Executar alimentação__
+        - _php artisan db:seed_
+    - __Executar alimentação específico__
+        - _php artisan db:seed --class=UserSeeder_
+    - __Executar refresh e seeder__
+        - _php artisan migrate:refresh --seed_

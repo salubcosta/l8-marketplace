@@ -13,6 +13,7 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
+     * Este campo fillable é o cara que informa quais campos podem ser armazenados em massa
      *
      * @var array
      */

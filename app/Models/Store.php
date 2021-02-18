@@ -9,9 +9,26 @@ class Store extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description', 'phone', 'mobile_phone', 'slug'];
+
     /**
      * Uma forma de informar manualmente o nome da tabela no DB
      * protected $table = 'nomeTable';
      */
-    
+
+     /**
+      * Relacionamento pertence a: user
+      */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relacionamento possui muitos: products
+     */
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

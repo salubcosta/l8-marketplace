@@ -23,7 +23,6 @@ class StoreFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'user_id' => 100,
             'description' => $this->faker->sentence,
             'phone' => $this->faker->phoneNumber,
             'mobile_phone' => $this->faker->phoneNumber,

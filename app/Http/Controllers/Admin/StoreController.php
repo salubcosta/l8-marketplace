@@ -28,7 +28,8 @@ class StoreController extends Controller
         
         $store = $user->store()->create($data);
 
-        return $store;
+        flash('Registro salvo')->success();
+        return redirect()->route('admin.stores.index');
     }
 
     public function edit($store){
@@ -44,13 +45,15 @@ class StoreController extends Controller
 
         $store->update($data);
 
-        return $store;
+        flash('Registo atualizado!')->success();
+        return redirect()->route('admin.stores.index');
     }
 
     public function destroy($store){
         $store = \App\Models\Store::find($store);
         $store->delete();
 
-        return redirect('/admin/stores');
+        flash('Registro removido!')->success();
+        return redirect()->route('admin.stores.index');
     }
 }

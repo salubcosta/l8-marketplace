@@ -15,18 +15,15 @@ class StoreController extends Controller
         return view('admin.stores.index', compact('stores'));
     }
 
-    public function create(){
-        $users = \App\Models\User::all(['id', 'name']);
-        
-        return view('admin.stores.create', compact('users'));
+    public function create()
+    {
+        return view('admin.stores.create');
     }
 
     public function store(Request $request){
         $data = $request->all();
 
-        $user = \App\Models\User::find($data['user']);
-        
-        $store = $user->store()->create($data);
+        auth()->user()->store()->create($data);
 
         flash('Registro salvo')->success();
         return redirect()->route('admin.stores.index');

@@ -14,11 +14,14 @@ use App\Http\Controllers\Admin\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/home', function () {
     $helloWorld = 'Hello World.';
     return view('welcome', compact('helloWorld'));
-});
+})->name('home');
 
 Route::get('/model', function(){
     
@@ -76,7 +79,7 @@ Route::get('/model', function(){
     return \App\Models\User::paginate(10);
 });
 
-Route::prefix('admin')->name('admin.')->group(function(){
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
     // Route::prefix('stores')->name('stores.')->group(function(){
     //     Route::get('/', [StoreController::class, 'index'])->name('index');
     //     Route::get('/create', [StoreController::class, 'create'])->name('create');
@@ -92,4 +95,4 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');

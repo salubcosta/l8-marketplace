@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
     // });
     Route::resource('stores', StoreController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('categories', CategoryController::class);
 });
 
 

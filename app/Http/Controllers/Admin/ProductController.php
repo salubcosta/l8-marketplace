@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->product->paginate(10);
+        $products = auth()->user()->store->products()->paginate(10);
 
         return view('admin.products.index', compact('products'));
     }
@@ -34,8 +34,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $stores = \App\Models\Store::all(['id', 'name']);
-        return view('admin.products.create', compact('stores'));
+        $categories = \App\Models\Category::all(['id', 'name']);
+
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -49,7 +50,9 @@ class ProductController extends Controller
         $data = $request->all();
         $data['slug'] = $data['name'];
 
-        $store = auth()->user()->store->products()->create($data);
+        $product = auth()->user()->store->products()->create($data);
+
+        if(isset($data['categories'])) $product->categories()->sync($data['categories']);
 
         flash('Registro salvo!')->success();
         return redirect()->route('admin.products.index');
@@ -74,9 +77,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        $categories = \App\Models\Category::all(['id', 'name']);
+        
         $product = $this->product->find($id);
 
-        return view('admin.products.edit', compact('product'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -94,6 +99,8 @@ class ProductController extends Controller
 
         $product->update($data);
 
+        if(isset($data['categories'])) $product->categories()->sync($data['categories']);
+        
         flash('Registro atualizado!')->success();
         return redirect()->route('admin.products.index');
     }

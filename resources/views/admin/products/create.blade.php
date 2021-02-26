@@ -3,7 +3,7 @@
 @section('content')
     <h1>Criar Produto</h1>
 
-    <form action="{{route('admin.products.store')}}" method="POST">
+    <form action="{{route('admin.products.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('post')
         <div class="form-group">
@@ -53,6 +53,11 @@
                     <option value="{{$category->id}}">{{$category->name}}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fotos do Produto</label>
+            <input type="file" name="photos[]" class="form-control" multiple>
         </div>
 
         <div class="form-group">

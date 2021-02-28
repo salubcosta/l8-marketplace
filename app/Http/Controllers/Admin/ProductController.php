@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -26,7 +27,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = auth()->user()->store->products()->paginate(10);
+        $store = auth()->user()->store;
+
+        if($store){
+            $products = $store->products()->paginate(10);
+        } else {
+            $products = null;
+        }
 
         return view('admin.products.index', compact('products'));
     }
@@ -52,7 +59,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
-        $data['slug'] = $data['name'];
+        $data['slug'] = Str::slug($data['name'], '-');
 
         $product = auth()->user()->store->products()->create($data);
 
@@ -105,7 +112,9 @@ class ProductController extends Controller
     public function update(ProductRequest $request, $id)
     {
         $data = $request->all();
-
+        
+        $data['slug'] = Str::slug($data['name'], '-');
+        
         $product = $this->product->find($id);
 
         $product->update($data);

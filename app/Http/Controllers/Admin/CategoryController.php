@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Requests\CategoryRequest;
@@ -45,7 +46,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->all();
-        $data['slug'] = $data['name'];
+        
+        $data['slug'] = Str::slug($data['name'],'-');
+
         $this->category->create($data);
 
         flash('Registro salvo!')->success();
@@ -86,6 +89,8 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         $data = $request->all();
+
+        $data['slug'] = Str::slug($data['name'],'-');
 
         $category = $this->category->find($id);
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreRequest;
 use App\Traits\UploadTrait;
@@ -29,7 +30,7 @@ class StoreController extends Controller
 
     public function store(StoreRequest $request){
         $data = $request->all();
-        $data['slug'] = $data['name']; # Falta trabalhar o slug
+        $data['slug'] = Str::slug($data['name'],'-');
 
         if($request->hasFile('logo'))
         {
@@ -50,6 +51,8 @@ class StoreController extends Controller
 
     public function update(StoreRequest $request, $store){
         $data = $request->all();
+
+        $data['slug'] = Str::slug($data['name'],'-');
 
         $store = \App\Models\Store::find($store);
 

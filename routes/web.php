@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductPhotoController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function(){
     Route::post('photos/remove', [ProductPhotoController::class, 'removePhoto'])->name('photo.remove');
 });
 
+Route::prefix('cart')->name('cart.')->group(function(){
+    Route::get('/', [CartController::class, 'index'])->name('index');
+    Route::post('add', [CartController::class, 'add'])->name('add');
+    Route::get('remove/{slug}', [CartController::class, 'remove'])->name('remove');
+    Route::get('cancel', [CartController::class, 'cancel'])->name('cancel');
+});
 
 Auth::routes();
 
